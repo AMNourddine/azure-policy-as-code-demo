@@ -42,7 +42,7 @@ resource "azurerm_storage_account" "this" {
   account_replication_type = "LRS"
   
   https_traffic_only_enabled    = true
-  public_network_access_enabled = true
+  public_network_access_enabled = false
   infrastructure_encryption_enabled = true
 
   tags = {
