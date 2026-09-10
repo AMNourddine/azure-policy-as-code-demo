@@ -1,0 +1,36 @@
+name: Policy CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  policy-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.1"
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        env:
+          TF_VAR_resource_group_name: ${{ vars.TF_VAR_RESOURCE_GROUP_NAME }}
+          TF_VAR_location: ${{ vars.TF_VAR_LOCATION }}
+          TF_VAR_storage_account_name: ${{ vars.TF_VAR_STORAGE_ACCOUNT_NAME }}
+        run: terraform plan -out=tfplan.binary
+        
