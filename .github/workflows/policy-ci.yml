@@ -53,7 +53,7 @@ jobs:
           conftest test tfplan.json --policy ../policy/rego
 
       - name: Trivy Security Scan
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: config
           scan-ref: .
